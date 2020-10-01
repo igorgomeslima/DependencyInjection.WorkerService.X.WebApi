@@ -3,6 +3,10 @@ using Shared.MediatR;
 using Shared.Repository;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Interfaces;
+using Shared.Generic;
+using Shared.Generic.Context;
+using Shared.UoW;
 
 namespace WorkerService
 {
@@ -18,7 +22,11 @@ namespace WorkerService
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddMediatR(typeof(PingQuery));
-                    services.AddScoped<IMyRepository, MyRepository>();
+                    //services.AddScoped<IMyRepository, MyRepository>();
+
+                    services.AddTransient<IUnitOfWork, UnitOfWork>();
+                    services.AddTransient<IMongoDbContext, MongoDbContext>();
+                    services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
                     services.AddHostedService<Worker>();
                 });

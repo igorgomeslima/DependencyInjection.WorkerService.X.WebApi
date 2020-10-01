@@ -26,7 +26,7 @@ namespace WorkerService
 
                 _logger.LogInformation("MediatR result: {result}", result);
 
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(60000, stoppingToken);
             }
         }
     }
